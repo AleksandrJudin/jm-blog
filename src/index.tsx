@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import 'antd/dist/antd.css';
-// import ServicesApi from './services/servicesAPI';
-
 import App from './App';
+import 'antd/dist/antd.css';
+import ServicesApi from './services/servicesAPI';
+
+const api = new ServicesApi(); 
+api.getRequestArticles().then(data => console.log(data))
+
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <App />,
   document.getElementById('root')
 );

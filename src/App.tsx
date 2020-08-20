@@ -1,10 +1,13 @@
 import React from 'react';
 import Header from './components/Header';
+import ArticlesListPage from './pages/ArticlesListPage';
+import './App.sass'
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <div>
+    <div className="container">
       <Header />
+      <ArticlesListPage />
     </div>
   );
 };

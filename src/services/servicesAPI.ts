@@ -1,5 +1,5 @@
 export default class {
-  baseUrl: string = 'https://conduit.productionready.io/api/articles';
+  baseUrl: string = 'https://conduit.productionready.io/api/&page=3';
 
   async getRequestArticles(): Promise<any> {
     const res = await fetch(this.baseUrl);
