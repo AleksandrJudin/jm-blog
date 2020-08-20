@@ -1,15 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import 'antd/dist/antd.css';
-import ServicesApi from './services/servicesAPI';
-
-const api = new ServicesApi(); 
-api.getRequestArticles().then(data => console.log(data))
-
-
+import { store } from './store/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
