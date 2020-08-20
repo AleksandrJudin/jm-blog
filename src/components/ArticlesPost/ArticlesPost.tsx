@@ -1,9 +1,9 @@
-import React, { useState, createElement } from 'react';
+import React from 'react';
 import { Comment, Tooltip, Avatar } from 'antd';
-// import { LikeOutlined, LikeFilled } from '@ant-design/icons';
-import moment from 'moment';
+import { HeartOutlined } from '@ant-design/icons';
 import './ArticlesPost.sass';
 import { IPosts } from '../../types/interfaces';
+
 const ArticlesPost: React.FC<IPosts> = ({
   title,
   author,
@@ -15,17 +15,26 @@ const ArticlesPost: React.FC<IPosts> = ({
   slug,
   tagList,
 }) => {
-  console.log(author);
+  const actions = [
+    <Tooltip key='comment-basic-like' title='Like'>
+      <button className='post__like_btn'>
+        <HeartOutlined />
+        <span className='comment-action no-active'>1</span>
+      </button>
+    </Tooltip>,
+  ];
   return (
     <Comment
-      // actions={actions}
+      actions={actions}
       author={<span>{author.username}</span>}
       avatar={<Avatar src={author.image} alt='Han Solo' />}
       content={
         <div>
-          <ul>
+          <ul className='tab__list'>
             {tagList.map((el: string) => (
-              <li key={`tags_${el}`}>{el}</li>
+              <li key={`tags_${el}`} className='tab__list_item'>
+                {el}
+              </li>
             ))}
           </ul>
           <h3>{title}</h3>
@@ -33,8 +42,8 @@ const ArticlesPost: React.FC<IPosts> = ({
         </div>
       }
       datetime={
-        <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-          <span>{moment().fromNow()}</span>
+        <Tooltip title={createdAt}>
+          <span>{createdAt.substring(0, 10)}</span>
         </Tooltip>
       }
     />
