@@ -1,25 +1,26 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+
 import { Comment, Tooltip, Avatar } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
-import './ArticlesPost.sass';
-import { IPosts } from '../../types/interfaces';
 
-const ArticlesPost: React.FC<IPosts> = ({
+import './ArticlesPost.sass';
+
+const ArticlesPost: React.FC<any> = ({
   title,
   author,
-  body,
   createdAt,
   description,
-  favorited,
   favoritesCount,
   slug,
   tagList,
+  history,
 }) => {
   const actions = [
     <Tooltip key='comment-basic-like' title='Like'>
-      <button className='post__like_btn'>
+      <button className='post__like_btn' disabled>
         <HeartOutlined />
-        <span className='comment-action no-active'>1</span>
+        <span className='comment-action no-active'>{favoritesCount}</span>
       </button>
     </Tooltip>,
   ];
@@ -37,8 +38,13 @@ const ArticlesPost: React.FC<IPosts> = ({
               </li>
             ))}
           </ul>
-          <h3>{title}</h3>
-          <p>{body}</p>
+          <h2
+            className='post__title'
+            onClick={() => history.push(`/articles/${slug}`)}
+          >
+            {title}
+          </h2>
+          <p>{description}</p>
         </div>
       }
       datetime={
@@ -50,4 +56,4 @@ const ArticlesPost: React.FC<IPosts> = ({
   );
 };
 
-export default ArticlesPost;
+export default withRouter(ArticlesPost);

@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { Pagination, Spin } from 'antd';
 import ArticlesPost from '../components/ArticlesPost';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPostRequest } from '../actions/actions';
+// import ArticlePage from './ArticlePage';
 
 const ArticlesListPage: React.FC = () => {
   const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getPostRequest(page));
   }, [dispatch, page]);
 
-  const posts = useSelector((state: any) => state.getPosts);
-  const createPostsList = posts.map((elem: any) => {
+  const changePaginations = (count: number): number => {
+    if (count !== 1) {
+      return +(count + '0');
+    }
+    return count;
+  };
+
+  const handlePaginationPage = (page: number): void => {
+    setPage(changePaginations(page));
+  };
+
+  const state = useSelector((state: any) => state);
+  const { isFetchingAllPosts, getPosts } = state;
+
+  const createPostsList = getPosts.map((elem: any) => {
     return (
       <ArticlesPost
         key={elem.slug}
@@ -28,7 +44,19 @@ const ArticlesListPage: React.FC = () => {
       />
     );
   });
-  return createPostsList;
+  const content = (
+    <>
+      {createPostsList}
+      <Pagination
+        showSizeChanger={false}
+        defaultCurrent={1}
+        total={500}
+        onChange={(page) => handlePaginationPage(page)}
+      />
+    </>
+  );
+
+  return isFetchingAllPosts ? <Spin size='large' /> : content;
 };
 
 export default ArticlesListPage;

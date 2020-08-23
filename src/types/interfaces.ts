@@ -9,3 +9,7 @@ export interface IPosts {
   slug: string;
   tagList: any;
 }
+
+export interface ISlug {
+  match: object;
+}
