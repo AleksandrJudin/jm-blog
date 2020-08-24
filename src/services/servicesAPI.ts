@@ -8,16 +8,9 @@ export default class {
     }
     return res.json();
   }
-  async getRequestArticles(offset: number = 0): Promise<any> {
-    return this.fetching(`articles?offset=${offset}&limit=10`);
-  }
 
-  async getRequestSingleArticle(slug: string): Promise<any> {
-    return this.fetching(`articles/${slug}`);
-  }
-
-  async registration(data: object) {
-    const res: Response = await fetch(`${this.baseUrl}users`, {
+  async sendingRequestData (url: string, data: object): Promise<any> {
+    const res: Response = await fetch(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -28,6 +21,22 @@ export default class {
     if (!res.ok) {
       throw new Error('Error');
     }
-    return res;
+    return res.json();
+  }
+
+  async getRequestArticles(offset: number = 0): Promise<any> {
+    return this.fetching(`articles?offset=${offset}&limit=10`);
+  }
+
+  async getRequestSingleArticle(slug: string): Promise<any> {
+    return this.fetching(`articles/${slug}`);
+  }
+
+  async registration(data: object): Promise<any>  {
+    return this.sendingRequestData('users', data)
+  }
+
+  async login(data: object): Promise<any>  {
+    return this.sendingRequestData('users/login', data)
   }
 }

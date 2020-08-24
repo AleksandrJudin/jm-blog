@@ -19,21 +19,19 @@ const AuthPage: React.FC<IReg> = () => {
     setError(false);
   };
 
-  let history = useHistory();
 
   const onSubmit = (data: any) => {
     const api = new ServicesApi();
-    const { name, email, password } = data;
+    const { email, password } = data;
     const result = {
       user: {
-        username: name,
         email: email,
         password: password,
       },
     };
     api
-      .registration(result)
-      .then(() => history.push('/succes'))
+      .login(result)
+      .then((data) => console.log(data))
       .catch(() => setError(true));
   };
 
@@ -41,8 +39,8 @@ const AuthPage: React.FC<IReg> = () => {
     <div className='reg-page'>
       {error && (
         <Alert
-          message='Ошибка регистрации'
-          description='Пользователь с таким именем или email уже зарегистрирован'
+          message='Ошибка авторизации'
+          description='Не правильно введённый пароль или email'
           type='error'
           closable
           onClose={errorAlerClose}
@@ -55,18 +53,8 @@ const AuthPage: React.FC<IReg> = () => {
           onSubmit={handleSubmit(onSubmit)}
         >
           <fieldset>
-            <legend>Sign Up</legend>
-            <input
-              type='text'
-              placeholder='Name'
-              ref={register({ required: true, maxLength: 20, minLength: 3 })}
-              name='name'
-            />
-            {errors.name && (
-              <span className='no-valid'>
-                Login must have at least from 3 to 20 characters
-              </span>
-            )}
+            <legend>Sign In</legend>
+          
             <input
               placeholder='Email'
               type='text'
@@ -80,7 +68,7 @@ const AuthPage: React.FC<IReg> = () => {
             <input
               name='password'
               type='password'
-              placeholder='password'
+              placeholder='Password'
               ref={register({
                 required: 'Enter your password',
                 minLength: 8,
@@ -92,22 +80,9 @@ const AuthPage: React.FC<IReg> = () => {
                 Password must have at least from 8 to 40 characters
               </span>
             )}
-            <input
-              type='password'
-              name='password_repeat'
-              placeholder='repeat password'
-              ref={register({
-                validate: (value) =>
-                  value === password.current || 'The passwords do not match',
-              })}
-            />
-            {errors.password_repeat && (
-              <span className='no-valid'>{errors.password_repeat.message}</span>
-            )}
-
-            <button className='submit-btn'>create</button>
+            <button className='submit-btn'>login</button>
             <p className='message'>
-              Already registered? <a href='/'>Sign In</a>
+              Already registered? <a href='/'>Sign Up</a>
             </p>
           </fieldset>
         </form>

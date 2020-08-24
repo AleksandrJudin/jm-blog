@@ -5,7 +5,7 @@ import Header from './components/Header';
 import ArticlesListPage from './pages/ArticlesListPage';
 import ArticlePage from './pages/ArticlePage';
 import AuthPage from './pages/AuthPage';
-import RegistrationPage from './pages/RegistrationPage';
+import RegPage from './pages/RegPage';
 import SuccesPage from './pages/SuccesPage';
 
 import 'antd/dist/antd.css';
@@ -19,7 +19,7 @@ const App: React.FC = () => {
         <Route path='/articles' component={ArticlesListPage} exact />
         <Route path='/articles/:slug' component={ArticlePage} exact />
         <Route path='/sign-in' component={AuthPage} />
-        <Route path='/sign-up' component={RegistrationPage} />
+        <Route path='/sign-up' component={RegPage} />
         <Route path='/succes' component={SuccesPage} />
         <Route exact path='/' render={() => <Redirect to='/articles' />} />
       </Router>
