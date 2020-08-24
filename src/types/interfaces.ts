@@ -13,3 +13,15 @@ export interface IPosts {
 export interface ISlug {
   match: object;
 }
+
+export interface ILogin {
+  firstName: string;
+  password?: string;
+}
+
+export interface IReg {
+  name: string;
+  email: string;
+  password: string;
+  password_repeat: string;
+}

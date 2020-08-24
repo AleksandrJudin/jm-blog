@@ -2,7 +2,7 @@ export default class {
   baseUrl: string = 'https://conduit.productionready.io/api/';
 
   async fetching(path: any): Promise<any> {
-    const res = await fetch(`${this.baseUrl}${path}`);
+    const res: Response = await fetch(`${this.baseUrl}${path}`);
     if (!res.ok) {
       throw new Error('Cloud error is ' + res.status);
     }
@@ -14,5 +14,20 @@ export default class {
 
   async getRequestSingleArticle(slug: string): Promise<any> {
     return this.fetching(`articles/${slug}`);
+  }
+
+  async registration(data: object) {
+    const res: Response = await fetch(`${this.baseUrl}users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      throw new Error('Error');
+    }
+    return res;
   }
 }
