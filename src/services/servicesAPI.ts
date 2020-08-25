@@ -9,7 +9,7 @@ export default class {
     return res.json();
   }
 
-  async sendingRequestData (url: string, data: object): Promise<any> {
+  async sendingRequestData(url: string, data: object): Promise<any> {
     const res: Response = await fetch(`${this.baseUrl}${url}`, {
       method: 'POST',
       headers: {
@@ -19,7 +19,7 @@ export default class {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      throw new Error('Error');
+      throw new Error('Cloud error is ' + res.status);
     }
     return res.json();
   }
@@ -32,11 +32,11 @@ export default class {
     return this.fetching(`articles/${slug}`);
   }
 
-  async registration(data: object): Promise<any>  {
-    return this.sendingRequestData('users', data)
+  async registration(data: object): Promise<any> {
+    return this.sendingRequestData('users', data);
   }
 
-  async login(data: object): Promise<any>  {
-    return this.sendingRequestData('users/login', data)
+  async login(data: object): Promise<any> {
+    return this.sendingRequestData('users/login', data);
   }
 }

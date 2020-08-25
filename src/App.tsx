@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { setUserData } from './actions/actions';
+
+import storageCollector from './services/storageCollector';
 
 import Header from './components/Header';
 import ArticlesListPage from './pages/ArticlesListPage';
@@ -12,6 +17,15 @@ import 'antd/dist/antd.css';
 import './App.sass';
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
+  const storageData = storageCollector();
+
+  useEffect(() => {
+    if (storageData) {
+      dispatch(setUserData(storageData));
+    }
+  }, [dispatch, storageData]);
+
   return (
     <div className='container'>
       <Router>

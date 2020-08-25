@@ -1,6 +1,8 @@
+import { IAuth } from './../types/interfaces';
 import { AppActions } from './../types/actions';
 import { Dispatch } from 'redux';
 import ServicesApi from '../services/servicesAPI';
+
 import { IPosts } from '../types/interfaces';
 
 export const addPost = (posts: Array<IPosts>): AppActions => ({
@@ -23,11 +25,25 @@ export const changeLoadingSinglePost = (payload: boolean): AppActions => ({
   payload,
 });
 
+export const changeAuthError = (payload: boolean): AppActions => ({
+  type: 'AUTHENTICATION_ERROR',
+  payload,
+});
+
+export const setUserData = (user: IAuth): AppActions => ({
+  type: 'SET_USER_DATA',
+  user,
+});
+
+export const logOut = (): AppActions => ({
+  type: 'LOG_OUT',
+});
+
 export const getPostRequest = (offset: number) => (
   dispatch: Dispatch
 ): void => {
-  const posts = new ServicesApi();
-  posts.getRequestArticles(offset).then((data) => {
+  const request = new ServicesApi();
+  request.getRequestArticles(offset).then((data) => {
     dispatch(addPost(data.articles));
     dispatch(changeLoadingAllPosts(false));
   });
@@ -37,9 +53,26 @@ export const getSinglePostRequest = (slug: string) => (
   dispatch: Dispatch
 ): void => {
   dispatch(changeLoadingSinglePost(true));
-  const post = new ServicesApi();
-  post.getRequestSingleArticle(slug).then((data) => {
+  const request = new ServicesApi();
+  request.getRequestSingleArticle(slug).then((data) => {
     dispatch(addSinglePost(data.article));
     dispatch(changeLoadingSinglePost(false));
   });
+};
+
+export const login = (data: object) => (dispatch: Dispatch): void => {
+  const request = new ServicesApi();
+  request
+    .login(data)
+    .then((data) => {
+      localStorage.setItem(
+        'login',
+        JSON.stringify({
+          user: data.user,
+        })
+      );
+      dispatch(setUserData(data.user));
+      dispatch(changeAuthError(false));
+    })
+    .catch(() => dispatch(changeAuthError(true)));
 };

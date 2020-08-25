@@ -25,3 +25,8 @@ export interface IReg {
   password: string;
   password_repeat: string;
 }
+
+export interface IAuth {
+  isAuth: boolean;
+  user: object | null;
+}

@@ -1,27 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+
 import { IReg } from '../types/interfaces';
-
+import { login } from '../actions/actions';
 import { Alert } from 'antd';
-
-import ServicesApi from '../services/servicesAPI';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 const AuthPage: React.FC<IReg> = () => {
-  const [error, setError] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const { isAuth } = useSelector((state: any) => state.isAuthentication);
+  const { isAuthError } = useSelector((state: any) => state);
 
-  const { register, handleSubmit, watch, errors } = useForm<IReg>();
-
-  const password = useRef({});
-  password.current = watch('password', '');
-
-  const errorAlerClose = () => {
-    setError(false);
-  };
-
+  const { register, handleSubmit, errors } = useForm<IReg>();
 
   const onSubmit = (data: any) => {
-    const api = new ServicesApi();
     const { email, password } = data;
     const result = {
       user: {
@@ -29,23 +22,19 @@ const AuthPage: React.FC<IReg> = () => {
         password: password,
       },
     };
-    api
-      .login(result)
-      .then((data) => console.log(data))
-      .catch(() => setError(true));
+    dispatch(login(result));
   };
 
   return (
     <div className='reg-page'>
-      {error && (
+      {isAuthError && (
         <Alert
           message='Ошибка авторизации'
           description='Не правильно введённый пароль или email'
           type='error'
-          closable
-          onClose={errorAlerClose}
         />
       )}
+      {isAuth && <Redirect from='/sign-in' to='/articles' />}
       <div className='form'>
         <form
           action='/lslsd'
@@ -54,7 +43,7 @@ const AuthPage: React.FC<IReg> = () => {
         >
           <fieldset>
             <legend>Sign In</legend>
-          
+
             <input
               placeholder='Email'
               type='text'
