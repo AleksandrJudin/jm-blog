@@ -18,8 +18,8 @@ const AuthPage: React.FC<IReg> = () => {
     const { email, password } = data;
     const result = {
       user: {
-        email: email,
-        password: password,
+        email,
+        password,
       },
     };
     dispatch(login(result));
@@ -36,11 +36,7 @@ const AuthPage: React.FC<IReg> = () => {
       )}
       {isAuth && <Redirect from='/sign-in' to='/articles' />}
       <div className='form'>
-        <form
-          action='/lslsd'
-          className='register-form'
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className='register-form' onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <legend>Sign In</legend>
 

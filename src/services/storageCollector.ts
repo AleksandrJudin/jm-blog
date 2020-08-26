@@ -1,6 +1,7 @@
+import { IAuth } from './../types/interfaces';
 import isEmpty from 'lodash.isempty';
 
-export default () => {
+export default (): IAuth | null => {
   const data: any = localStorage.getItem('login');
   const parse = JSON.parse(data);
   if (!isEmpty(parse) && parse) {

@@ -12,6 +12,7 @@ import ArticlePage from './pages/ArticlePage';
 import AuthPage from './pages/AuthPage';
 import RegPage from './pages/RegPage';
 import SuccesPage from './pages/SuccesPage';
+import ProfilePage from './pages/ProfilePage';
 
 import 'antd/dist/antd.css';
 import './App.sass';
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <Route path='/sign-in' component={AuthPage} />
         <Route path='/sign-up' component={RegPage} />
         <Route path='/succes' component={SuccesPage} />
+        <Route path='/profile' component={ProfilePage} />
         <Route exact path='/' render={() => <Redirect to='/articles' />} />
       </Router>
     </div>

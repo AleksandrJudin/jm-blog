@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Link } from 'react-router-dom';
-import { PageHeader, Button, Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Link, useHistory } from 'react-router-dom';
+import { PageHeader, Button } from 'antd';
 
 import './Header.sass';
 import { logOut } from '../../actions/actions';
@@ -11,13 +10,18 @@ import { logOut } from '../../actions/actions';
 const Header: React.FC = () => {
   const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const userAvatars: any =
-    isAuth && (user.image ? user.image : <UserOutlined />);
+    isAuth &&
+    (user.image
+      ? user.image
+      : 'https://img.icons8.com/fluent/48/000000/user-male.png');
 
   const handlerLogOut = () => {
     localStorage.removeItem('login');
     dispatch(logOut());
+    history.push('/sign-in');
   };
 
   const createInfoProfile: JSX.Element = (
@@ -26,7 +30,11 @@ const Header: React.FC = () => {
         <span className='d-block'>{isAuth && user.email}</span>
         <button onClick={handlerLogOut}>Выйти</button>
       </div>
-      <Avatar size={40} icon={userAvatars} />
+      <Link to='/profile'>
+        <div className='avatar'>
+          <img src={userAvatars} alt='' />
+        </div>
+      </Link>
     </div>
   );
 

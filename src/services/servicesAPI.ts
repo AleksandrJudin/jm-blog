@@ -39,4 +39,19 @@ export default class {
   async login(data: object): Promise<any> {
     return this.sendingRequestData('users/login', data);
   }
+
+  async changeProfile(data: object, token: string): Promise<any> {
+    const res = await fetch(`${this.baseUrl}user`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      throw new Error('Cloud error is ' + res.status);
+    }
+    return res.json();
+  }
 }

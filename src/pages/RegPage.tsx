@@ -27,10 +27,11 @@ const RegistrationPage: React.FC<IReg> = () => {
     const result = {
       user: {
         username: name,
-        email: email,
-        password: password,
+        email,
+        password,
       },
     };
+    console.log(data);
     api
       .registration(result)
       .then(() => history.push('/succes'))
@@ -49,11 +50,7 @@ const RegistrationPage: React.FC<IReg> = () => {
         />
       )}
       <div className='form'>
-        <form
-          action='/lslsd'
-          className='register-form'
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className='register-form' onSubmit={handleSubmit(onSubmit)}>
           <fieldset>
             <legend>Sign Up</legend>
             <input
