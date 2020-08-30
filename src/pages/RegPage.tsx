@@ -31,7 +31,6 @@ const RegistrationPage: React.FC<IReg> = () => {
         password,
       },
     };
-    console.log(data);
     api
       .registration(result)
       .then(() => history.push('/succes'))

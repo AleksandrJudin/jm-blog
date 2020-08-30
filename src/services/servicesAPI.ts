@@ -4,7 +4,7 @@ export default class {
   async fetching(path: any): Promise<any> {
     const res: Response = await fetch(`${this.baseUrl}${path}`);
     if (!res.ok) {
-      throw new Error('Cloud error is ' + res.status);
+      throw new Error('Fetching error ' + res.status);
     }
     return res.json();
   }
@@ -19,7 +19,22 @@ export default class {
       body: JSON.stringify(data),
     });
     if (!res.ok) {
-      throw new Error('Cloud error is ' + res.status);
+      throw new Error('Sending error ' + res.status);
+    }
+    return res.json();
+  }
+
+  async changingRequest(data: object, token: string): Promise<any> {
+    const res: Response = await fetch(`${this.baseUrl}user`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      throw new Error('Changing error ' + res.status);
     }
     return res.json();
   }
@@ -40,18 +55,20 @@ export default class {
     return this.sendingRequestData('users/login', data);
   }
 
-  async changeProfile(data: object, token: string): Promise<any> {
-    const res = await fetch(`${this.baseUrl}user`, {
-      method: 'PUT',
+  async addNewPostRequest(data: object, token: string): Promise<any> {
+    const res: Response = await fetch(`${this.baseUrl}articles`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: `Token ${token}`,
       },
+      referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     });
-    if (!res.ok) {
-      throw new Error('Cloud error is ' + res.status);
-    }
     return res.json();
+  }
+
+  async changeProfile(data: object, token: string): Promise<any> {
+    return this.changingRequest(data, token);
   }
 }

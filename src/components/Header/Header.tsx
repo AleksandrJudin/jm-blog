@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { Link, useHistory } from 'react-router-dom';
+
 import { PageHeader, Button } from 'antd';
 
 import './Header.sass';
@@ -26,6 +26,10 @@ const Header: React.FC = () => {
 
   const createInfoProfile: JSX.Element = (
     <div className='d-flex align-center' key='info-profile'>
+      <Link to='/new-article'>
+        <span className='new-post-link'>Add New Post</span>
+      </Link>
+
       <div className='profile-group'>
         <span className='d-block'>{isAuth && user.email}</span>
         <button onClick={handlerLogOut}>Выйти</button>
