@@ -7,6 +7,9 @@ export const ADD_SINGLE_POST = 'ADD_SINGLE_POST';
 export const SET_USER_DATA = 'SET_USER_DATA';
 export const LOG_OUT = 'LOG_OUT';
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR';
+export const ADD_POST_TAG = 'ADD_POST_TAG';
+export const FAVORITE_POST = 'FAVORITE_POST';
+export const UNFAVORITE_POST = 'UNFAVORITE_POST';
 
 export interface AddPostsActions {
   type: typeof ADD_POSTS;
@@ -37,8 +40,21 @@ export interface SetUserDataAction {
   user: IAuth;
 }
 
+export interface addPostTag {
+  type: typeof ADD_POST_TAG;
+  payload: string[];
+}
+
 export interface LogOut {
   type: typeof LOG_OUT;
+}
+
+export interface favoritePost {
+  type: typeof FAVORITE_POST;
+}
+
+export interface unfavoritePost {
+  type: typeof UNFAVORITE_POST;
 }
 
 export type ExpenseActionTypes =
@@ -48,6 +64,9 @@ export type ExpenseActionTypes =
   | AddSinglePostActions
   | SetUserDataAction
   | LogOut
-  | changeAuthError;
+  | changeAuthError
+  | addPostTag
+  | favoritePost
+  | unfavoritePost;
 
 export type AppActions = ExpenseActionTypes;

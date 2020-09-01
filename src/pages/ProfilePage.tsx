@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Result } from 'antd';
 
 import { Alert } from 'antd';
 import ServicesApi from '../services/servicesAPI';
@@ -43,7 +42,7 @@ const ProfilePage: React.FC = (): JSX.Element => {
       });
   };
 
-  const content: JSX.Element = isAuth ? (
+  const content: JSX.Element = (
     <>
       <div className='profile-info'>
         {succes && <Alert message='Успешно изменено!' type='success' />}
@@ -104,12 +103,6 @@ const ProfilePage: React.FC = (): JSX.Element => {
         </form>
       </div>
     </>
-  ) : (
-    <Result
-      status='403'
-      title='403'
-      subTitle='Sorry, you are not authorized to access this page.'
-    />
   );
 
   return content;

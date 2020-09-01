@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { IReg } from '../types/interfaces';
 
 import { Alert } from 'antd';
@@ -103,7 +103,7 @@ const RegistrationPage: React.FC<IReg> = () => {
 
             <button className='submit-btn'>create</button>
             <p className='message'>
-              Already registered? <a href='/'>Sign In</a>
+              Already registered? <Link to='/sign-in'>Sign In</Link>
             </p>
           </fieldset>
         </form>

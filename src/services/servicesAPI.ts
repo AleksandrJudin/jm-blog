@@ -1,8 +1,12 @@
 export default class {
   baseUrl: string = 'https://conduit.productionready.io/api/';
 
-  async fetching(path: any): Promise<any> {
-    const res: Response = await fetch(`${this.baseUrl}${path}`);
+  async fetching(path: any, token: any = null): Promise<any> {
+    const auth: any = token && { Authorization: `Token ${token}` };
+    const res: Response = await fetch(`${this.baseUrl}${path}`, {
+      method: 'GET',
+      headers: { ...auth },
+    });
     if (!res.ok) {
       throw new Error('Fetching error ' + res.status);
     }
@@ -24,13 +28,19 @@ export default class {
     return res.json();
   }
 
-  async changingRequest(data: object, token: string): Promise<any> {
-    const res: Response = await fetch(`${this.baseUrl}user`, {
-      method: 'PUT',
+  async changeRequest(
+    data: object | null,
+    token: string,
+    method: string,
+    url: string
+  ): Promise<any> {
+    const res: Response = await fetch(`${this.baseUrl}${url}`, {
+      method: method,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
         Authorization: `Token ${token}`,
       },
+      referrerPolicy: 'no-referrer',
       body: JSON.stringify(data),
     });
     if (!res.ok) {
@@ -39,12 +49,18 @@ export default class {
     return res.json();
   }
 
-  async getRequestArticles(offset: number = 0): Promise<any> {
-    return this.fetching(`articles?offset=${offset}&limit=10`);
+  async getRequestArticles(
+    offset: number = 0,
+    token: string | null
+  ): Promise<any> {
+    return this.fetching(`articles?offset=${offset}&limit=10`, token);
   }
 
-  async getRequestSingleArticle(slug: string): Promise<any> {
-    return this.fetching(`articles/${slug}`);
+  async getRequestSingleArticle(
+    slug: string,
+    token: string | null
+  ): Promise<any> {
+    return this.fetching(`articles/${slug}`, token);
   }
 
   async registration(data: object): Promise<any> {
@@ -55,20 +71,7 @@ export default class {
     return this.sendingRequestData('users/login', data);
   }
 
-  async addNewPostRequest(data: object, token: string): Promise<any> {
-    const res: Response = await fetch(`${this.baseUrl}articles`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Token ${token}`,
-      },
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify(data),
-    });
-    return res.json();
-  }
-
   async changeProfile(data: object, token: string): Promise<any> {
-    return this.changingRequest(data, token);
+    return this.changeRequest(data, token, 'PUT', 'user');
   }
 }

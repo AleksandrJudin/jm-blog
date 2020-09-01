@@ -1,32 +1,44 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Typography, Tooltip, Avatar, Spin } from 'antd';
-import { HeartOutlined } from '@ant-design/icons';
+import { Typography, Avatar, Spin } from 'antd';
 
 import { ISlug } from '../types/interfaces';
 import { getSinglePostRequest } from '../actions/actions';
+import ChangePostButtons from '../components/ChangePostButtons';
+import FavoriteCountBtn from '../components/FavoriteCountBtn';
 
 const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getSinglePostRequest(match.params.slug));
-  }, [dispatch, match.params.slug]);
-
-  const state = useSelector((state: any) => state);
-
+  const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
   const { Title, Paragraph } = Typography;
-  const { getSinglePost, isFetchingSinglePost } = state;
+  const token = isAuth && user.token;
+  const {
+    getSinglePost,
+    isFetchingSinglePost,
+    favoritePostsCount,
+  } = useSelector((state: any) => state);
   const {
     title,
     body,
     createdAt,
     favoritesCount,
+    favorited,
     tagList,
     description,
     author,
   } = getSinglePost;
+
+  useEffect(() => {
+    dispatch(getSinglePostRequest(match.params.slug, token));
+  }, [dispatch, match.params.slug, token, favoritePostsCount]);
+
+  const localStorageData: any = localStorage.getItem('login');
+
+  const authUser: any =
+    localStorageData && JSON.parse(localStorageData).user.username;
+  const authToken: any =
+    localStorageData && JSON.parse(localStorageData).user.token;
 
   const createTagList = tagList && (
     <ul className='tab__list'>
@@ -40,17 +52,20 @@ const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
 
   const content: any = !isFetchingSinglePost && (
     <>
+      {authUser && authUser === author.username && (
+        <ChangePostButtons slug={match.params.slug} token={authToken} />
+      )}
+
       <div className='d-flex justify-content-between mt-4'>
         <div className='d-flex'>
           <Title className='pr-3' level={4}>
             {title}
           </Title>
-          <Tooltip key='comment-basic-like-sdasf' title='Like'>
-            <button className='post__like_btn' disabled>
-              <HeartOutlined />
-              <span className='comment-action'>{favoritesCount}</span>
-            </button>
-          </Tooltip>
+          <FavoriteCountBtn
+            count={favoritesCount}
+            slug={match.params.slug}
+            favorited={favorited}
+          />
         </div>
 
         <div className='author d-flex'>

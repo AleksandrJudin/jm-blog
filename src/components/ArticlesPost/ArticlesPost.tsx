@@ -2,9 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { Comment, Tooltip, Avatar } from 'antd';
-import { HeartOutlined } from '@ant-design/icons';
 
 import './ArticlesPost.sass';
+import FavoriteCountBtn from '../FavoriteCountBtn';
 
 const ArticlesPost: React.FC<any> = ({
   title,
@@ -15,15 +15,16 @@ const ArticlesPost: React.FC<any> = ({
   slug,
   tagList,
   history,
+  favorited,
 }) => {
   const actions = [
-    <Tooltip key='comment-basic-like' title='Like'>
-      <button className='post__like_btn' disabled>
-        <HeartOutlined />
-        <span className='comment-action no-active'>{favoritesCount}</span>
-      </button>
-    </Tooltip>,
+    <FavoriteCountBtn
+      count={favoritesCount}
+      slug={slug}
+      favorited={favorited}
+    />,
   ];
+
   return (
     <Comment
       actions={actions}

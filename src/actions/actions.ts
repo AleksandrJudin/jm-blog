@@ -39,22 +39,35 @@ export const logOut = (): AppActions => ({
   type: 'LOG_OUT',
 });
 
-export const getPostRequest = (offset: number) => (
+export const addArticleTag = (payload: string[]): AppActions => ({
+  type: 'ADD_POST_TAG',
+  payload,
+});
+
+export const addFavotitesPost = (): AppActions => ({
+  type: 'FAVORITE_POST',
+});
+
+export const addUnfavotitesPost = (): AppActions => ({
+  type: 'UNFAVORITE_POST',
+});
+
+export const getPostRequest = (offset: number, token: string | null) => (
   dispatch: Dispatch
 ): void => {
   const request = new ServicesApi();
-  request.getRequestArticles(offset).then((data) => {
+  request.getRequestArticles(offset, token).then((data) => {
     dispatch(addPost(data.articles));
     dispatch(changeLoadingAllPosts(false));
   });
 };
 
-export const getSinglePostRequest = (slug: string) => (
+export const getSinglePostRequest = (slug: string, token: string | null) => (
   dispatch: Dispatch
 ): void => {
   dispatch(changeLoadingSinglePost(true));
   const request = new ServicesApi();
-  request.getRequestSingleArticle(slug).then((data) => {
+  request.getRequestSingleArticle(slug, token).then((data) => {
     dispatch(addSinglePost(data.article));
     dispatch(changeLoadingSinglePost(false));
   });

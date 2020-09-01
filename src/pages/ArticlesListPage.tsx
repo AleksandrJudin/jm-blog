@@ -3,16 +3,20 @@ import { Pagination, Spin } from 'antd';
 import ArticlesPost from '../components/ArticlesPost';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPostRequest } from '../actions/actions';
-// import ArticlePage from './ArticlePage';
 
 const ArticlesListPage: React.FC = () => {
   const [page, setPage] = useState(0);
 
   const dispatch = useDispatch();
+  const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
+  const token: string | null = isAuth && user.token;
+
+  const { favoritePostsCount } = useSelector((state: any) => state);
+  const { isFetchingAllPosts, getPosts } = useSelector((state: any) => state);
 
   useEffect(() => {
-    dispatch(getPostRequest(page));
-  }, [dispatch, page]);
+    dispatch(getPostRequest(page, token));
+  }, [dispatch, page, token, favoritePostsCount]);
 
   const changePaginations = (count: number): number => {
     if (count !== 1) {
@@ -25,9 +29,6 @@ const ArticlesListPage: React.FC = () => {
     setPage(changePaginations(page));
   };
 
-  const state = useSelector((state: any) => state);
-  const { isFetchingAllPosts, getPosts } = state;
-
   const createPostsList = getPosts.map((elem: any) => {
     return (
       <ArticlesPost
@@ -37,7 +38,7 @@ const ArticlesListPage: React.FC = () => {
         body={elem.body}
         createdAt={elem.createdAt}
         description={elem.description}
-        favorited={elem.favorites}
+        favorited={elem.favorited}
         favoritesCount={elem.favoritesCount}
         slug={elem.slug}
         tagList={elem.tagList}

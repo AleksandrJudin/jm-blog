@@ -5,7 +5,7 @@ import { IReg } from '../types/interfaces';
 import { login } from '../actions/actions';
 import { Alert } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const AuthPage: React.FC<IReg> = () => {
   const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const AuthPage: React.FC<IReg> = () => {
             )}
             <button className='submit-btn'>login</button>
             <p className='message'>
-              Already registered? <a href='/'>Sign Up</a>
+              Already registered? <Link to='/sign-up'>Sign Up</Link>
             </p>
           </fieldset>
         </form>
