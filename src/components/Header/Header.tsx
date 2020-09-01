@@ -7,7 +7,7 @@ import { PageHeader, Button } from 'antd';
 import './Header.sass';
 import { logOut } from '../../actions/actions';
 
-const Header: React.FC = () => {
+const Header: React.FC = (): JSX.Element => {
   const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
   const dispatch = useDispatch();
   let history = useHistory();

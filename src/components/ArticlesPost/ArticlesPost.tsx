@@ -16,7 +16,7 @@ const ArticlesPost: React.FC<any> = ({
   tagList,
   history,
   favorited,
-}) => {
+}): JSX.Element => {
   const actions = [
     <FavoriteCountBtn
       count={favoritesCount}

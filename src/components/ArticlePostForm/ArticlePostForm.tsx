@@ -10,7 +10,10 @@ interface IPostForm {
   legend: string;
 }
 
-const ArticlePostForm: React.FC<IPostForm> = ({ submit, legend }) => {
+const ArticlePostForm: React.FC<IPostForm> = ({
+  submit,
+  legend,
+}): JSX.Element => {
   const [tags, setTags] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const { register, handleSubmit, errors } = useForm();
