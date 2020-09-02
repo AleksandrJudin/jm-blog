@@ -4,8 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { PageHeader, Button } from 'antd';
 
-import './Header.sass';
 import { logOut } from '../../actions/actions';
+import './Header.sass';
 
 const Header: React.FC = (): JSX.Element => {
   const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
@@ -57,9 +57,12 @@ const Header: React.FC = (): JSX.Element => {
     <PageHeader
       key={Math.random()}
       className='site-page-header'
-      title='My Super Blog'
-      onBack={() => window.history.back()}
-      subTitle='This is a subtitle'
+      title={
+        <span className='header__title'>
+          <Link to='/'>Blog Platform</Link>
+        </span>
+      }
+      subTitle='by Aleksandr Judin'
       extra={[isAuth ? createInfoProfile : notAuthContent]}
     ></PageHeader>
   );
