@@ -1,7 +1,7 @@
 import { IPosts, IAuth } from './interfaces';
 
 export const ADD_POSTS = 'ADD_POSTS';
-export const LOADING_ALL_POSTS = 'LOADING_ALL_POSTS';
+export const FETCHING = 'FETCHING';
 export const LOADING_SINGLE_POST = 'LOADING_SINGLE_POST';
 export const ADD_SINGLE_POST = 'ADD_SINGLE_POST';
 export const SET_USER_DATA = 'SET_USER_DATA';
@@ -20,8 +20,8 @@ export interface AddSinglePostActions {
   post: IPosts[];
 }
 
-export interface changeLoadingAllPostsStateAction {
-  type: typeof LOADING_ALL_POSTS;
+export interface changeLoadingAction {
+  type: typeof FETCHING;
   payload: boolean;
 }
 
@@ -59,7 +59,7 @@ export interface unfavoritePost {
 
 export type ExpenseActionTypes =
   | AddPostsActions
-  | changeLoadingAllPostsStateAction
+  | changeLoadingAction
   | changeLoadingSinglePostStateAction
   | AddSinglePostActions
   | SetUserDataAction

@@ -15,13 +15,8 @@ export const addSinglePost = (post: Array<IPosts>): AppActions => ({
   post,
 });
 
-export const changeLoadingAllPosts = (payload: boolean): AppActions => ({
-  type: 'LOADING_ALL_POSTS',
-  payload,
-});
-
-export const changeLoadingSinglePost = (payload: boolean): AppActions => ({
-  type: 'LOADING_SINGLE_POST',
+export const changeLoading = (payload: boolean): AppActions => ({
+  type: 'FETCHING',
   payload,
 });
 
@@ -56,20 +51,21 @@ export const getPostRequest = (offset: number, token: string | null) => (
   dispatch: Dispatch
 ): void => {
   const request = new ServicesApi();
+  dispatch(changeLoading(true));
   request.getRequestArticles(offset, token).then((data) => {
     dispatch(addPost(data.articles));
-    dispatch(changeLoadingAllPosts(false));
+    dispatch(changeLoading(false));
   });
 };
 
 export const getSinglePostRequest = (slug: string, token: string | null) => (
   dispatch: Dispatch
 ): void => {
-  dispatch(changeLoadingSinglePost(true));
   const request = new ServicesApi();
+  dispatch(changeLoading(true));
   request.getRequestSingleArticle(slug, token).then((data) => {
     dispatch(addSinglePost(data.article));
-    dispatch(changeLoadingSinglePost(false));
+    dispatch(changeLoading(false));
   });
 };
 

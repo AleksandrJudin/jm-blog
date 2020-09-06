@@ -1,11 +1,11 @@
-const isFetchingSingleReducerDefaultState: boolean = true;
+const isFetchingAllReducerDefaultState: boolean = false;
 
 export default (
-  state = isFetchingSingleReducerDefaultState,
+  state = isFetchingAllReducerDefaultState,
   action: any
 ): boolean => {
   switch (action.type) {
-    case 'LOADING_SINGLE_POST':
+    case 'ALL_POSTS_FETCHING':
       return (state = action.payload);
     default:
       return state;

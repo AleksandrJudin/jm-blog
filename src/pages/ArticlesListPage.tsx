@@ -12,7 +12,7 @@ const ArticlesListPage: React.FC = () => {
   const token: string | null = isAuth && user.token;
 
   const { favoritePostsCount } = useSelector((state: any) => state);
-  const { isFetchingAllPosts, getPosts } = useSelector((state: any) => state);
+  const { isFetching, posts } = useSelector((state: any) => state);
 
   useEffect(() => {
     dispatch(getPostRequest(page, token));
@@ -29,7 +29,7 @@ const ArticlesListPage: React.FC = () => {
     setPage(changePaginations(page));
   };
 
-  const createPostsList = getPosts.map((elem: any) => {
+  const createPostsList = posts.map((elem: any) => {
     return (
       <ArticlesPost
         key={elem.slug}
@@ -45,10 +45,12 @@ const ArticlesListPage: React.FC = () => {
       />
     );
   });
-  const content = (
+
+  return (
     <>
-      {createPostsList}
+      {!isFetching ? createPostsList : <Spin size='large' />}
       <Pagination
+        style={{ display: isFetching ? 'none' : 'flex' }}
         showSizeChanger={false}
         defaultCurrent={1}
         total={500}
@@ -56,8 +58,6 @@ const ArticlesListPage: React.FC = () => {
       />
     </>
   );
-
-  return isFetchingAllPosts ? <Spin size='large' /> : content;
 };
 
 export default ArticlesListPage;

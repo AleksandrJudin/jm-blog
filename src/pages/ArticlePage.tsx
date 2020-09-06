@@ -8,16 +8,14 @@ import { getSinglePostRequest } from '../actions/actions';
 import ChangePostButtons from '../components/ChangePostButtons';
 import FavoriteCountBtn from '../components/FavoriteCountBtn';
 
-const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
+const ArticlePage: React.FC = ({ match }: any) => {
   const dispatch = useDispatch();
   const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
   const { Title, Paragraph } = Typography;
   const token = isAuth && user.token;
-  const {
-    getSinglePost,
-    isFetchingSinglePost,
-    favoritePostsCount,
-  } = useSelector((state: any) => state);
+  const { post, isFetching } = useSelector((state: any) => state);
+  const currentPost = !isFetching ? post : null;
+  console.log(currentPost);
   const {
     title,
     body,
@@ -27,11 +25,11 @@ const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
     tagList,
     description,
     author,
-  } = getSinglePost;
+  } = currentPost;
 
   useEffect(() => {
     dispatch(getSinglePostRequest(match.params.slug, token));
-  }, [dispatch, match.params.slug, token, favoritePostsCount]);
+  }, [dispatch, match.params.slug, token]);
 
   const localStorageData: any = localStorage.getItem('login');
 
@@ -49,8 +47,8 @@ const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
       ))}
     </ul>
   );
-
-  const content: any = !isFetchingSinglePost && (
+  console.log(authUser);
+  const content: any = !isFetching && (
     <>
       {authUser && authUser === author.username && (
         <ChangePostButtons slug={match.params.slug} token={authToken} />
@@ -84,7 +82,11 @@ const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
     </>
   );
 
-  return isFetchingSinglePost ? <Spin size='large' /> : content;
+  return isFetching ? (
+    <Spin size='large' />
+  ) : (
+    <h1>lOLOLOLOLOLOLOLOLOLOLOLOL</h1>
+  );
 };
 
 export default ArticlePage;

@@ -8,11 +8,13 @@ import { useDispatch } from 'react-redux';
 interface IPostForm {
   submit: any;
   legend: string;
+  articleTags: string[] | null;
 }
 
 const ArticlePostForm: React.FC<IPostForm> = ({
   submit,
   legend,
+  articleTags,
 }): JSX.Element => {
   const [tags, setTags] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
@@ -22,8 +24,11 @@ const ArticlePostForm: React.FC<IPostForm> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (articleTags) {
+      setTags(articleTags);
+    }
     dispatch(addArticleTag(tags));
-  }, [dispatch, tags]);
+  }, [dispatch, tags, articleTags]);
 
   const onChangeTagValue = (e: any): void => {
     setValue(e.target.value);

@@ -30,7 +30,9 @@ const EditArticlePage: React.FC<ISlug> = ({ match }): JSX.Element => {
       .then((data) => history.push('/articles'))
       .catch((e) => console.log(e));
   };
-  return <ArticlePostForm submit={onSubmit} legend='Edit Post' />;
+  return (
+    <ArticlePostForm submit={onSubmit} legend='Edit Post' articleTags={null} />
+  );
 };
 
 export default EditArticlePage;
