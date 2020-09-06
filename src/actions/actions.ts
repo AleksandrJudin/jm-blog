@@ -55,6 +55,7 @@ export const addUnfavotitesPost = (): AppActions => ({
 export const getPostRequest = (offset: number, token: string | null) => (
   dispatch: Dispatch
 ): void => {
+  dispatch(changeLoadingAllPosts(true));
   const request = new ServicesApi();
   request.getRequestArticles(offset, token).then((data) => {
     dispatch(addPost(data.articles));

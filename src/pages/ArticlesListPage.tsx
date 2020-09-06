@@ -45,10 +45,12 @@ const ArticlesListPage: React.FC = () => {
       />
     );
   });
-  const content = (
+
+  return (
     <>
-      {createPostsList}
+      {!isFetchingAllPosts ? createPostsList : <Spin size='large' />}
       <Pagination
+        style={{ display: isFetchingAllPosts ? 'none' : 'flex' }}
         showSizeChanger={false}
         defaultCurrent={1}
         total={500}
@@ -56,8 +58,6 @@ const ArticlesListPage: React.FC = () => {
       />
     </>
   );
-
-  return isFetchingAllPosts ? <Spin size='large' /> : content;
 };
 
 export default ArticlesListPage;
