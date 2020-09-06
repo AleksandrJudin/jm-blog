@@ -11,12 +11,11 @@ const ArticlesListPage: React.FC = () => {
   const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
   const token: string | null = isAuth && user.token;
 
-  const { favoritePostsCount } = useSelector((state: any) => state);
-  const { isFetchingAllPosts, getPosts } = useSelector((state: any) => state);
+  const { isFetchingAllPosts, posts } = useSelector((state: any) => state);
 
   useEffect(() => {
     dispatch(getPostRequest(page, token));
-  }, [dispatch, page, token, favoritePostsCount]);
+  }, [dispatch, page, token]);
 
   const changePaginations = (count: number): number => {
     if (count !== 1) {
@@ -29,7 +28,7 @@ const ArticlesListPage: React.FC = () => {
     setPage(changePaginations(page));
   };
 
-  const createPostsList = getPosts.map((elem: any) => {
+  const createPostsList = posts.map((elem: any) => {
     return (
       <ArticlesPost
         key={elem.slug}

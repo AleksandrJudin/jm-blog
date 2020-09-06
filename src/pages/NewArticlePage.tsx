@@ -27,7 +27,13 @@ const NewArticlePage: React.FC = (): any => {
       .then((data) => history.push('/articles'))
       .catch((e) => console.log(e));
   };
-  return <ArticlePostForm submit={onSubmit} legend='Create New Post' />;
+  return (
+    <ArticlePostForm
+      submit={onSubmit}
+      legend='Create New Post'
+      postTags={null}
+    />
+  );
 };
 
 export default NewArticlePage;

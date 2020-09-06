@@ -13,11 +13,9 @@ const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
   const { isAuth, user } = useSelector((state: any) => state.isAuthentication);
   const { Title, Paragraph } = Typography;
   const token = isAuth && user.token;
-  const {
-    getSinglePost,
-    isFetchingSinglePost,
-    favoritePostsCount,
-  } = useSelector((state: any) => state);
+  const { post, isFetchingSinglePost, favoritePostsCount } = useSelector(
+    (state: any) => state
+  );
   const {
     title,
     body,
@@ -27,7 +25,7 @@ const ArticlePage: React.FC<ISlug> = ({ match }: any) => {
     tagList,
     description,
     author,
-  } = getSinglePost;
+  } = post;
 
   useEffect(() => {
     dispatch(getSinglePostRequest(match.params.slug, token));

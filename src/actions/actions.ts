@@ -44,12 +44,9 @@ export const addArticleTag = (payload: string[]): AppActions => ({
   payload,
 });
 
-export const addFavotitesPost = (): AppActions => ({
+export const changeFavotitesPost = (payload: object): AppActions => ({
   type: 'FAVORITE_POST',
-});
-
-export const addUnfavotitesPost = (): AppActions => ({
-  type: 'UNFAVORITE_POST',
+  payload,
 });
 
 export const getPostRequest = (offset: number, token: string | null) => (

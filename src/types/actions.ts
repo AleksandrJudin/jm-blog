@@ -51,6 +51,7 @@ export interface LogOut {
 
 export interface favoritePost {
   type: typeof FAVORITE_POST;
+  payload: object;
 }
 
 export interface unfavoritePost {

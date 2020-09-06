@@ -1,21 +1,19 @@
 import { combineReducers } from 'redux';
 
-import getPosts from './getPosts';
+import posts from './posts';
 import isFetchingAllPosts from './isFetchingAllPosts';
 import isFetchingSinglePost from './isFetchingSinglePost';
-import getSinglePost from './getSinglePost';
+import post from './post';
 import isAuthentication from './isAuthentication';
 import isAuthError from './isAuthError';
 import articlesPostTags from './articlesPostTags';
-import favoritePostsCount from './favoritePostsCount';
 
 export const rootReducer: any = combineReducers({
-  getPosts,
-  getSinglePost,
+  posts,
+  post,
   isFetchingAllPosts,
   isFetchingSinglePost,
   isAuthentication,
   isAuthError,
   articlesPostTags,
-  favoritePostsCount,
 });

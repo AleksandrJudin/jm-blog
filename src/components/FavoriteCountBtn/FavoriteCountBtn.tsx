@@ -3,8 +3,9 @@ import { Tooltip } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { changeFavotitesPost } from '../../actions/actions';
+
 import servicesApi from '../../services/servicesAPI';
-import { addFavotitesPost, addUnfavotitesPost } from '../../actions/actions';
 
 const FavoriteCountBtn: React.FC<any> = ({
   count,
@@ -17,11 +18,10 @@ const FavoriteCountBtn: React.FC<any> = ({
 
   const onClickBtn = () => {
     const api = new servicesApi();
-    const subscribe = favorited ? addUnfavotitesPost : addFavotitesPost;
     const method = favorited ? 'DELETE' : 'POST';
     api
       .changeRequest(null, token, method, `articles/${slug}/favorite`)
-      .then(() => dispatch(subscribe()));
+      .then((data) => dispatch(changeFavotitesPost(data.article)));
   };
 
   return (

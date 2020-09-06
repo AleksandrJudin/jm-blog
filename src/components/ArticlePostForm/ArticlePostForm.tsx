@@ -8,11 +8,13 @@ import { useDispatch } from 'react-redux';
 interface IPostForm {
   submit: any;
   legend: string;
+  postTags: string[] | null;
 }
 
 const ArticlePostForm: React.FC<IPostForm> = ({
   submit,
   legend,
+  postTags,
 }): JSX.Element => {
   const [tags, setTags] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');

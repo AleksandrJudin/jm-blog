@@ -11,9 +11,8 @@ const EditArticlePage: React.FC<ISlug> = ({ match }): JSX.Element => {
   let history = useHistory();
 
   const { user } = useSelector((state: any) => state.isAuthentication);
-  const { articlesPostTags } = useSelector((state: any) => state);
-  const { params }: any = match;
 
+  const { params }: any = match;
   const onSubmit = (data: any) => {
     const api = new servicesApi();
     const { title, description, text } = data;
@@ -22,7 +21,6 @@ const EditArticlePage: React.FC<ISlug> = ({ match }): JSX.Element => {
         title,
         description,
         body: text,
-        tagList: articlesPostTags,
       },
     };
     api
@@ -30,7 +28,9 @@ const EditArticlePage: React.FC<ISlug> = ({ match }): JSX.Element => {
       .then((data) => history.push('/articles'))
       .catch((e) => console.log(e));
   };
-  return <ArticlePostForm submit={onSubmit} legend='Edit Post' />;
+  return (
+    <ArticlePostForm submit={onSubmit} legend='Edit Post' postTags={null} />
+  );
 };
 
 export default EditArticlePage;
